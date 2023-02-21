@@ -1,14 +1,19 @@
-# RISC-V boot loader of hazelnut
+# RISC-V boot of hazelnut
 
 .globl _start
 
-loop:
-    j loop       # jump to loop label unconditionally
-
 .section .text
-_start:
-    jal loop     # jump and link to loop label
 
-    # pad the remaining bytes with zeros
-    .fill 14 - (. - _start)
-    .word 0x0
+_start:
+    csrr t0, mhartid  # put current hart id into t0
+    bnez t0, pend     # branching if not zero (first) hart
+    j end             # jump to end
+
+end:
+    j end             # jump to end label unconditionally
+
+pend:
+    wfi               # wait for instruction
+    j pend
+
+.end                  # end of file
