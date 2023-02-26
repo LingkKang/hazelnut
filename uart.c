@@ -4,22 +4,23 @@
 
 // UART control registers
 // defined only when needed
-#define RHR 0
-#define THR 0
+#define RHR 0 // Receive Holding Register (READ)
+#define THR 0 // Transmit Holding Register (WRITE)
 #define DLL 0 // Divisor Latch Least Significant Bit (WRITE)
 #define DLM 1 // Divisor Latch Most Significant Bit (WRITE)
 #define IER 1 // Interrupt Enable Register (WRITE)
-#define CFR 2
-#define ISR 2
 #define LCR 3 // Line Control Register (WRITE)
-#define MCR 4
-#define LSR 5
-#define MSR 6
-#define SPR 7
+#define LSR 5 // Line Status Register (READ)
 
 // Special bits of registers
 #define LCR_BAUD_LATCH (1 << 7) // 0 disabled (default), 1 enabled
 #define LCR_WORD_LEN_8 3 // bit 0 and 1 both set to 1 for word length 8
+#define LSR_TR_IDLE (1 << 5) // 0 THR is empty, previous data trandmitted
+
+/* conventional abbreviations:
+    RX: receive
+    TX: transmit
+*/
 
 volatile uint8 *get_reg(int reg) {
     // return the memory location of given register name
@@ -63,5 +64,22 @@ void uart_init(void) {
     return;
 }
 
-void uart_putchar(char c);
-void uart_puts(char *s);
+void uart_putchar(char c) {
+    uint8 current_LSR;
+    while (1) {
+        current_LSR = uart_read_reg(LSR);
+        if (current_LSR | LSR_TR_IDLE) {
+            break;
+        }
+    }
+    uart_write_reg(THR, c);
+    return;
+}
+
+void uart_puts(char *s) {
+    while (*s) {
+        uart_putchar(*s);
+        s++;
+    }
+    return;
+}
