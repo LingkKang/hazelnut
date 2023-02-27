@@ -1,20 +1,33 @@
 .DEFAULT_GOAL := all
 
-AS = riscv64-unknown-elf-as
-LD = riscv64-unknown-elf-ld
-GCC = riscv64-unknown-elf-gcc
-CFLAGS = -nostdlib -g -Ttext=0x80000000
-QEMU = qemu-system-riscv64
+PREFIX = riscv64-unknown-elf-
 
-ASM = boot.S
+GCC = ${PREFIX}gcc
+C_FLAGS = -nostdlib -fno-builtin -march=rv32ima -mabi=ilp32 -g -Wall
 
-all:
-	${AS} ${ASM} -o boot.o
-	${GCC} -c -o enter.o enter.c
-	${LD} ${CFLAGS} boot.o enter.o -o boot.elf
+QEMU = qemu-system-riscv32
+QEMU_FLAGS = -nographic -machine virt -bios none
+
+ASM_FILE = boot.S
+C_FILE = enter.c uart.c
+OBJ_FILE = $(ASM_FILE:.S=.o)
+OBJ_FILE += $(C_FILE:.c=.o)
+
+all: os.elf
+
+os.elf: ${OBJ_FILE}
+	${GCC} ${C_FLAGS} -Ttext=0x80000000 -o $@ $^
+
+%.o: %.S
+	${GCC} ${C_FLAGS} -c -o $@ $^
+
+%.o: %.c
+	${GCC} ${C_FLAGS} -c -o $@ $^
 
 run: all
-	${QEMU} -machine virt -bios none -kernel boot.elf
+	@echo "Press Ctrl-A and then X to exit QEMU"
+	@echo "------------------------------------"
+	${QEMU} ${QEMU_FLAGS} -kernel os.elf
 
 .PHONY: clean
 clean:
