@@ -4,6 +4,7 @@
 
 // UART control registers
 // defined only when needed
+// see http://byterunner.com/16550.html
 #define RHR 0 // Receive Holding Register (READ)
 #define THR 0 // Transmit Holding Register (WRITE)
 #define DLL 0 // Divisor Latch Least Significant Bit (WRITE)
@@ -82,4 +83,40 @@ void uart_puts(char *s) {
         s++;
     }
     return;
+}
+
+void uart_print_char_val(uint8 c){
+    // print binary value of given char
+    // mainly used for testing
+
+    uint8 i = 7;
+    while (1) {
+        uint8 bit = ((c & (1 << i))? '1' : '0');
+        uart_putchar(bit);
+        if (i == 0) {
+            break;
+        }
+        i--;
+    }
+    return;
+}
+
+uint8 uart_getchar(void) {
+    uint8 current_LSR = uart_read_reg(LSR);
+    if (current_LSR & 1) {
+        uint8 c = uart_read_reg(RHR);
+
+        // make input visible
+        uart_putchar(c);
+        // uart_print_char_val(c); // check binary of input
+        if (c == '\r') {
+            // handle carrige return new line
+            uart_putchar('\n');
+        } else if (c == '\b') {
+            // handle backspace
+            uart_puts(" \b"); // whitespace cover previous input
+        }
+        return c;
+    }
+    return -1;
 }
