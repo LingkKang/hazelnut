@@ -16,7 +16,7 @@ OBJ_FILE += $(C_FILE:.c=.o)
 all: os.elf
 
 os.elf: ${OBJ_FILE}
-	${GCC} ${C_FLAGS} -Ttext=0x80000000 -o $@ $^
+	${GCC} ${C_FLAGS} -T kernel.ld -o $@ $^
 
 %.o: %.S
 	${GCC} ${C_FLAGS} -c -o $@ $^
@@ -25,8 +25,8 @@ os.elf: ${OBJ_FILE}
 	${GCC} ${C_FLAGS} -c -o $@ $^
 
 run: all
-	@echo "Press Ctrl-A and then X to exit QEMU"
-	@echo "------------------------------------"
+	@echo Press Ctrl-A and then X to exit QEMU
+	@echo ------------------------------------
 	${QEMU} ${QEMU_FLAGS} -kernel os.elf
 
 .PHONY: clean
