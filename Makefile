@@ -9,7 +9,7 @@ QEMU = qemu-system-riscv32
 QEMU_FLAGS = -nographic -machine virt -bios none
 
 ASM_FILE = boot.S
-C_FILE = enter.c uart.c
+C_FILE = enter.c uart.c print.c
 OBJ_FILE = $(ASM_FILE:.S=.o)
 OBJ_FILE += $(C_FILE:.c=.o)
 
