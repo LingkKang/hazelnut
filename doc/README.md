@@ -4,5 +4,4 @@
 
 - `boot.S`: Bootstrap to load kernel.
 - `enter.c`: Routines before going to kernel.
-- `types.h`: Basic types used in kernel.
 - `uart.c`: Sereal port driver.
