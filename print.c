@@ -2,8 +2,6 @@
 
 #include "defs.h"
 
-#define TODO(void) (panic("TODO"))
-
 char digits[] = "0123456789ABCDEF";
 
 void kprintint(int num)
@@ -27,7 +25,8 @@ void kprintint(int num)
         i++;
     }
     i--;
-    while (i >= 0) {
+    while (i >= 0)
+    {
         uart_putchar(reverse_digits[i]);
         i--;
     }
@@ -93,4 +92,7 @@ void test_print(void)
     uart_putchar('\n');
     kprintint(987654321);
     uart_putchar('\n');
+
+    //kprintf test
+    kprintf("ABCD");
 }

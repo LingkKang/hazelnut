@@ -2,6 +2,8 @@
 
 #include "types.h"
 
+#define TODO(void) (panic("TODO"))
+
 // uart.c
 extern void uart_init(void);
 extern void uart_putchar(char c);
