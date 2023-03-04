@@ -4,24 +4,37 @@
 
 char digits[] = "0123456789ABCDEF";
 
-void kprintint(int num)
+void kprintint(int num, int base)
 {
-    if (num < 0)
+    // print an integer, only support %d and %h
+    if (base != 10 && base != 16)
     {
-        uart_putchar('-');
-        num = -num;
+        panic("Unsupported number system!");
     }
     else if (num == 0)
     {
         uart_putchar('0');
         return;
     }
+    if (num < 0)
+    {
+        if (base == 10)
+        {
+            uart_putchar('-');
+            num = -num;
+        }
+        else
+        {
+            kprintptr(num);
+            return;
+        }
+    }
     uint8 reverse_digits[32];
     int i = 0;
-    while (num > 0)
+    while (num != 0)
     {
-        reverse_digits[i] = digits[num % 10];
-        num /= 10;
+        reverse_digits[i] = digits[num % base];
+        num /= base;
         i++;
     }
     i--;
@@ -39,7 +52,6 @@ void kprintptr(uint32 p)
     uint8 digit;
     uint8 i = 7;
     uint32 four_bits;
-    uart_puts("0x");
     while (1)
     {
         four_bits = p & (15 << i * 4);
@@ -84,15 +96,21 @@ void test_print(void)
     uart_putchar('\n');
 
     // kprintint test
-    kprintint(8);
+    // base 10 part
+    kprintint(-235, 10);
     uart_putchar('\n');
-    kprintint(-235);
+    kprintint(0xABCD, 10); // 43981
     uart_putchar('\n');
-    kprintint(0xABCD);
+    kprintint(987654321, 10);
     uart_putchar('\n');
-    kprintint(987654321);
+    // base 16 part
+    kprintint(-3, 16); // FFFF FFFD
+    uart_putchar('\n');
+    kprintint(0xABCD, 16);
+    uart_putchar('\n');
+    kprintint(987654321, 16); // 3ADE 68B1
     uart_putchar('\n');
 
-    //kprintf test
+    // kprintf test
     kprintf("ABCD");
 }
