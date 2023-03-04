@@ -5,7 +5,7 @@
 
 char digits[] = "0123456789ABCDEF";
 
-void kprintint(int num, int base)
+void kprint_int(int num, int base)
 {
     // print an integer, only support %d and %h
     if (base != 10 && base != 16)
@@ -26,7 +26,7 @@ void kprintint(int num, int base)
         }
         else
         {
-            kprintptr(num);
+            kprint_ptr(num);
             return;
         }
     }
@@ -47,7 +47,7 @@ void kprintint(int num, int base)
     return;
 }
 
-void kprintptr(uint32 p)
+void kprint_ptr(uint32 p)
 {
     // print hex value of a pointer.
     uint8 digit;
@@ -87,15 +87,15 @@ void kprintf(char *s, ...)
             switch (c)
             {
             case 'd':
-                kprintint(va_arg(args, int), 10);
+                kprint_int(va_arg(args, int), 10);
                 break;
 
             case 'x':
-                kprintint(va_arg(args, int), 16);
+                kprint_int(va_arg(args, int), 16);
                 break;
 
             case 'p':
-                kprintptr(va_arg(args, uint32));
+                kprint_ptr(va_arg(args, uint32));
                 break;
 
             case 's':
@@ -132,32 +132,32 @@ void panic(char *s)
 
 void test_print(void)
 {
-    // kprintptr test
-    kprintptr(2);
+    // kprint_ptr test
+    kprint_ptr(2);
     uart_putchar('\n');
-    kprintptr(15);
+    kprint_ptr(15);
     uart_putchar('\n');
-    kprintptr(0xABCD98);
+    kprint_ptr(0xABCD98);
     uart_putchar('\n');
-    kprintptr(123456789); // 075B CD15
+    kprint_ptr(123456789); // 075B CD15
     uart_putchar('\n');
-    kprintptr(4294967295); // FFFF FFFF
+    kprint_ptr(4294967295); // FFFF FFFF
     uart_putchar('\n');
 
-    // kprintint test
+    // kprint_int test
     // base 10 part
-    kprintint(-235, 10);
+    kprint_int(-235, 10);
     uart_putchar('\n');
-    kprintint(0xABCD, 10); // 43981
+    kprint_int(0xABCD, 10); // 43981
     uart_putchar('\n');
-    kprintint(987654321, 10);
+    kprint_int(987654321, 10);
     uart_putchar('\n');
     // base 16 part
-    kprintint(-3, 16); // FFFF FFFD
+    kprint_int(-3, 16); // FFFF FFFD
     uart_putchar('\n');
-    kprintint(0xABCD, 16);
+    kprint_int(0xABCD, 16);
     uart_putchar('\n');
-    kprintint(987654321, 16); // 3ADE 68B1
+    kprint_int(987654321, 16); // 3ADE 68B1
     uart_putchar('\n');
 
     // kprintf test
