@@ -14,4 +14,4 @@ extern uint8 uart_getchar(void);
 extern void kprintint(int num, int base);
 extern void kprintptr(uint32 p);
 extern void panic(char *s);
-extern void kprintf();
+extern void kprintf(char *s, ...);

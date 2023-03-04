@@ -1,5 +1,6 @@
 // formatted print utilities: kprintf, panic
 
+#include <stdarg.h>
 #include "defs.h"
 
 char digits[] = "0123456789ABCDEF";
@@ -66,9 +67,57 @@ void kprintptr(uint32 p)
     return;
 }
 
-void kprintf()
+void kprintf(char *s, ...)
 {
-    TODO();
+    // printf, only support %d, %x, %p, %s and %c
+    va_list args;
+    va_start(args, s);
+    int i = 0;
+    uint8 c = s[i];
+    while (c)
+    {
+        // break untill null char
+        if (c != '%')
+        {
+            uart_putchar(c);
+        }
+        else
+        {
+            c = s[++i];
+            switch (c)
+            {
+            case 'd':
+                kprintint(va_arg(args, int), 10);
+                break;
+
+            case 'x':
+                kprintint(va_arg(args, int), 16);
+                break;
+
+            case 'p':
+                kprintptr(va_arg(args, uint32));
+                break;
+
+            case 's':
+                uart_puts(va_arg(args, char *));
+                break;
+
+            case 'c':
+                uart_putchar(va_arg(args, int));
+                break;
+
+            case '%':
+                uart_putchar(c);
+                break;
+
+            default:
+                panic("Unknown format specifier.");
+                break;
+            }
+        }
+        i++;
+        c = s[i];
+    }
 }
 
 void panic(char *s)
@@ -112,5 +161,9 @@ void test_print(void)
     uart_putchar('\n');
 
     // kprintf test
-    kprintf("ABCD");
+    kprintf("Blablabla\n");
+    kprintf("Today is %d %s %d\n", 2022, "March", 4);
+    kprintf("Function puts is at %p\n", uart_puts);
+    kprintf("Number %d in hex is %x\n", 13579, 13579);
+    kprintf("Test %c %% char...\n", 'a');
 }
