@@ -3,3 +3,6 @@
 
 # executable files
 *.elf
+
+# local settings
+.vscode/
