@@ -8,8 +8,8 @@ C_FLAGS = -nostdlib -fno-builtin -march=rv32ima -mabi=ilp32 -g -Wall
 QEMU = qemu-system-riscv32
 QEMU_FLAGS = -nographic -machine virt -bios none
 
-ASM_FILE = boot.S
-C_FILE = enter.c uart.c print.c
+ASM_FILE = boot.S memory.s
+C_FILE = enter.c uart.c print.c page.c
 OBJ_FILE = $(ASM_FILE:.S=.o)
 OBJ_FILE += $(C_FILE:.c=.o)
 
