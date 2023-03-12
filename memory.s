@@ -2,8 +2,11 @@
 .globl HEAP_START
 HEAP_START: .word _heap_start
 
-.globl Heap_SIZE
-Heap_SIZE: .word _heap_size
+# .globl Heap_SIZE
+# Heap_SIZE: .word _heap_size
+
+.globl MEM_END
+MEM_END: .word _memory_end
 
 .globl TEXT_START
 TEXT_START: .word _text_start
