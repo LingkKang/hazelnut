@@ -2,6 +2,10 @@
 
 #include "types.h"
 
+#define TRUE 1
+#define FALSE 0
+#define NULL 0
+
 #define TODO(void) (panic("TODO"))
 
 // uart.c
@@ -18,3 +22,6 @@ extern void kprintf(char *s, ...);
 
 // page.c
 extern void page_init(void);
+extern void *kalloc(void);
+extern void *kalloc_pages(uint32 pg_num);
+extern void kfree(void *p);

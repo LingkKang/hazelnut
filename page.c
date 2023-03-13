@@ -30,22 +30,13 @@ static uint32 starting_point = 0; // where allocation starts
 static uint32 terminal_point = 0; // where allocation ends
 static uint32 page_count = 0;     // the number of pages that can be allocated
 
+#define PGH_START HEAP_START                         // page header start
+#define PGH_END (PGH_START + page_count * PAGE_SIZE) // page header end
+
 #define _check_tail(page) (page.header & PAGE_TAIL)
 #define _check_occupied(page) (page.header & OCCUPIED)
 #define _clear(pg) (pg->profile = 0) // clean header to 0 as initialization
 #define _align(addr) ((addr + PAGE_SIZE - 1) & ~(PAGE_SIZE - 1))
-
-
-// _clear      -> _clear
-// _is_free    -> _check_occupied
-// _set_flag
-// _is_last    -> _check_tail
-// _align_page
-
-// page_init
-// page_alloc
-// page_free
-// test_page
 
 void page_init()
 {
@@ -69,8 +60,52 @@ void page_init()
     terminal_point = starting_point + (PAGE_SIZE * page_count);
 
     kprintf("TEXT:   0x%x -> 0x%x\n", TEXT_START, TEXT_END);
-	kprintf("RODATA: 0x%x -> 0x%x\n", RODATA_START, RODATA_END);
-	kprintf("DATA:   0x%x -> 0x%x\n", DATA_START, DATA_END);
-	kprintf("BSS:    0x%x -> 0x%x\n", BSS_START, BSS_END);
-	kprintf("HEAP:   0x%x -> 0x%x\n", starting_point, terminal_point);
+    kprintf("RODATA: 0x%x -> 0x%x\n", RODATA_START, RODATA_END);
+    kprintf("DATA:   0x%x -> 0x%x\n", DATA_START, DATA_END);
+    kprintf("BSS:    0x%x -> 0x%x\n", BSS_START, BSS_END);
+    kprintf("HEAP:   0x%x -> 0x%x\n", starting_point, terminal_point);
+}
+
+void *kalloc(void)
+{
+    // allocate one page
+    struct Page *p = (struct Page *)PGH_START;
+    uint16 i = 0;
+    while (i + PGH_START < PGH_END)
+    {
+        if (((p->profile) & OCCUPIED) == 0)
+        {
+            break;
+        }
+        i++;
+        p++;
+        if ((int)p > PGH_END)
+        {
+            return NULL;
+        }
+    }
+    p->profile |= OCCUPIED;
+    p->profile |= PAGE_TAIL;
+    return (void *)(starting_point + PAGE_SIZE * i);
+}
+
+void *kalloc_pages(uint32 pg_num)
+{
+    // alloc multiple pages
+    TODO();
+    return NULL;
+}
+
+void kfree(void *p)
+{
+    TODO();
+    return;
+}
+
+void test_alloc(void)
+{
+    kprintf("First  page allocated at %p\n", kalloc());
+    kprintf("Second page allocated at %p\n", kalloc());
+    kprintf("Third  page allocated at %p\n", kalloc());
+    return;
 }
