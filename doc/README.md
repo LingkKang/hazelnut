@@ -6,3 +6,5 @@
 - `enter.c`: Routines before going to kernel.
 - `uart.c`: Sereal port driver.
 - `print.c`: Formatted print utilities.
+- `memory.s`: Addresses receive from `kernel.ld`.
+- `page.c`: Memory initialization, allocation and free.
