@@ -98,14 +98,34 @@ void *kalloc_pages(uint32 pg_num)
 
 void kfree(void *p)
 {
-    TODO();
+    // free a chunck of memory
+    struct Page *head = (void *)(((int)p - starting_point)/PAGE_SIZE + PGH_START);
+    while ((head->profile & PAGE_TAIL) == 0)
+    {
+        head->profile &= 0;
+        head++;
+    }
+    head->profile &= 0;
     return;
 }
 
 void test_alloc(void)
 {
-    kprintf("First  page allocated at %p\n", kalloc());
-    kprintf("Second page allocated at %p\n", kalloc());
-    kprintf("Third  page allocated at %p\n", kalloc());
+    // kalloc test
+    void *m1 = kalloc();
+    void *m2 = kalloc();
+    void *m3 = kalloc();
+    kprintf("First  page allocated at 0x%p\n", m1);
+    kprintf("Second page allocated at 0x%p\n", m2);
+    kprintf("Third  page allocated at 0x%p\n", m3);
+    // kfree test
+    kfree(m2);
+    kprintf("Second page freed\n");
+    void *m4 = kalloc();
+    kprintf("Fourth page allocated at 0x%p\n", m4);
+    kfree(m1);
+    kfree(m3);
+    kfree(m4);
+
     return;
 }
