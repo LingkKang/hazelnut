@@ -86,20 +86,75 @@ void *kalloc(void)
     }
     p->profile |= OCCUPIED;
     p->profile |= PAGE_TAIL;
+    page_count--;
     return (void *)(starting_point + PAGE_SIZE * i);
 }
 
 void *kalloc_pages(uint32 pg_num)
 {
     // alloc multiple pages
-    TODO();
+    if (pg_num > page_count)
+    {
+        // not enough available pages
+        return NULL;
+    }
+    struct Page *p = (struct Page *)PGH_START;
+    struct Page *q;
+    uint8 found = FALSE;
+    uint16 i = 0;
+    for (; i < PGH_END; i++)
+    {
+        // find available space
+        if ((p->profile & OCCUPIED) == 0)
+        {
+            // find one header unoccupied
+            q = p;
+            uint16 j = 0;
+            for (; j < pg_num; j++)
+            {
+                // go ahead and check this space is big enough
+                if ((q->profile & OCCUPIED) == 0)
+                {
+                    q++;
+                    continue;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            // if j is less than pg_num
+            // meaning the space is not big enough
+            // not found and keep searching
+            if (j == pg_num)
+            {
+                found = TRUE;
+                break;
+            }
+        }
+        p++;
+    }
+
+    // space found
+    if (found == TRUE)
+    {
+        // set headers of the space as unavailable
+        while (pg_num != 0)
+        {
+            p->profile |= OCCUPIED;
+            pg_num--;
+        }
+        p->profile |= PAGE_TAIL;
+        return (void *)(i * PAGE_SIZE + starting_point);
+    }
+    // could not found space big enough and contiguous
     return NULL;
 }
 
 void kfree(void *p)
 {
     // free a chunck of memory
-    struct Page *head = (void *)(((int)p - starting_point)/PAGE_SIZE + PGH_START);
+    struct Page *head = (void *)(((int)p - starting_point) / PAGE_SIZE + PGH_START);
     while ((head->profile & PAGE_TAIL) == 0)
     {
         head->profile &= 0;
@@ -118,14 +173,25 @@ void test_alloc(void)
     kprintf("First  page allocated at 0x%p\n", m1);
     kprintf("Second page allocated at 0x%p\n", m2);
     kprintf("Third  page allocated at 0x%p\n", m3);
+
+    // kalloc_pages test
+    void *m4 = kalloc_pages(15);
+    kprintf("15    pages allocated at 0x%p\n", m4);
+    void *m5 = kalloc_pages(1024);
+    kprintf("1024  pages allocated at 0x%p\n", m5);
+
     // kfree test
     kfree(m2);
-    kprintf("Second page freed\n");
-    void *m4 = kalloc();
-    kprintf("Fourth page allocated at 0x%p\n", m4);
-    kfree(m1);
     kfree(m3);
+    kprintf("Second and third pages freed\n");
+    void *m6 = kalloc_pages(2);
+    kprintf("2 new pages allocated at 0x%p\n", m6);
+
+    kfree(m1);
     kfree(m4);
+    kfree(m5);
+    kfree(m6);
+    kprintf("All allocated pages freed\n");
 
     return;
 }
