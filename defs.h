@@ -29,4 +29,7 @@ extern void *kalloc(void);
 extern void *kalloc_pages(uint32 pg_num);
 extern void kfree(void *p);
 
+// timer.s
+extern void ksleep_millisec(unsigned int t);
+
 #endif
