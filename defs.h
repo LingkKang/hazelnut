@@ -1,5 +1,8 @@
 // ultimate header file
 
+#ifndef __DEFS_H__
+#define __DEFS_H__
+
 #include "types.h"
 
 #define TRUE 1
@@ -25,3 +28,5 @@ extern void page_init(void);
 extern void *kalloc(void);
 extern void *kalloc_pages(uint32 pg_num);
 extern void kfree(void *p);
+
+#endif

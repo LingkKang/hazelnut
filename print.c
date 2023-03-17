@@ -76,7 +76,7 @@ void kprintf(char *s, ...)
     uint8 c = s[i];
     while (c)
     {
-        // break untill null char
+        // break until null char
         if (c != '%')
         {
             uart_putchar(c);
@@ -161,7 +161,7 @@ void test_print(void)
     uart_putchar('\n');
 
     // kprintf test
-    kprintf("Blablabla\n");
+    kprintf("Blah blah blah\n");
     kprintf("Today is %d %s %d\n", 2022, "March", 4);
     kprintf("Function puts is at %p\n", uart_puts);
     kprintf("Number %d in hex is %x\n", 13579, 13579);

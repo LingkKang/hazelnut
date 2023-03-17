@@ -19,7 +19,7 @@ extern uint32 MEM_END;
 
 // page header description
 #define OCCUPIED (1 << 0)  // bit 0, set to 1 if allocated
-#define PAGE_TAIL (1 << 1) // bit 1, set to 1 if is last allocated chunck
+#define PAGE_TAIL (1 << 1) // bit 1, set to 1 if is last allocated chunk
 
 struct Page
 {
@@ -153,7 +153,7 @@ void *kalloc_pages(uint32 pg_num)
 
 void kfree(void *p)
 {
-    // free a chunck of memory
+    // free a chunk of memory
     struct Page *head = (void *)(((int)p - starting_point) / PAGE_SIZE + PGH_START);
     while ((head->profile & PAGE_TAIL) == 0)
     {

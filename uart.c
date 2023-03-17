@@ -1,4 +1,4 @@
-// sereal port driver
+// serial port driver
 
 #include "types.h"
 
@@ -18,7 +18,7 @@
 // Special bits of registers
 #define LCR_BAUD_LATCH (1 << 7) // 0 disabled (default), 1 enabled
 #define LCR_WORD_LEN_8 3        // bit 0 and 1 both set to 1 for word length 8
-#define LSR_TR_IDLE (1 << 5)    // 0 THR is empty, previous data trandmitted
+#define LSR_TR_IDLE (1 << 5)    // 0 THR is empty, previous data transmitted
 #define LSR_RX_READY 1          // first bit is 1 if RHR receives data
 
 /* conventional abbreviations:
@@ -58,7 +58,7 @@ void uart_init(void)
     uart_write_reg(LCR, current_LCR | LCR_BAUD_LATCH);
     // second, set divisor latch to 3
     // which makes baud rate 38.4K
-    // seprate to LSB and MSB
+    // separate to LSB and MSB
     uart_write_reg(DLL, 0x03);
     uart_write_reg(DLM, 0x00);
 
