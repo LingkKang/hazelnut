@@ -32,4 +32,7 @@ extern void kfree(void *p);
 // timer.s
 extern void ksleep_millisec(unsigned int t);
 
+// switch.s
+extern void switch_context(Context *old_context, Context *new_context);
+
 #endif
