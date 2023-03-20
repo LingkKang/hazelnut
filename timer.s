@@ -1,3 +1,5 @@
+# RISC-V 32 sleep function
+
 # void ksleep_millisec(unsigned int t);
 
 .func ksleep_millisec

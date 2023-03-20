@@ -1,7 +1,6 @@
 #include "defs.h"
 
 #define MAX_TASKS 10
-#define MAX_TASK 10
 #define STACK_SIZE 1024
 
 uint8 task_stacks[MAX_TASKS][STACK_SIZE];
@@ -37,7 +36,9 @@ void task_pause(void)
 {
     // return control to OS
     kprintf("Switching ...\n");
+    // save current context
     Context *old_context = current_context;
+    // update current context with OS context
     current_context = &os_context;
     // switch context
     switch_context(old_context, current_context);

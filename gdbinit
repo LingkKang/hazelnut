@@ -1,3 +1,5 @@
+# GDB initialization script
+
 set disassemble-next-line on
 b _start
 b uart_init

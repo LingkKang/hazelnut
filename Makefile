@@ -10,19 +10,19 @@ QEMU_FLAGS = -nographic -machine virt -bios none
 
 GDB = ${PREFIX}gdb
 
-ASM_FILE = \
-	boot.S \
-	memory.s \
-	timer.s \
+ASM_FILE =      \
+	boot.S      \
+	memory.s    \
+	timer.s     \
 	switch.s
 
-C_FILE = \
-	enter.c \
-	uart.c \
-	print.c \
-	page.c \
-	sched.c \
-	user.c \
+C_FILE =        \
+	enter.c     \
+	uart.c      \
+	print.c     \
+	page.c      \
+	sched.c     \
+	user.c      \
 	kernel.c
 
 OBJ_FILE = $(ASM_FILE:.S=.o)

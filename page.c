@@ -1,3 +1,5 @@
+// page and memory allocation
+
 #include "types.h"
 #include "defs.h"
 

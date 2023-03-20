@@ -1,3 +1,4 @@
+// user activities
 
 #include "types.h"
 #include "defs.h"
