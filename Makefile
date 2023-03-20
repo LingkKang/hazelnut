@@ -20,7 +20,9 @@ C_FILE = \
 	enter.c \
 	uart.c \
 	print.c \
-	page.c
+	page.c \
+	sched.c \
+	user.c
 
 OBJ_FILE = $(ASM_FILE:.S=.o)
 OBJ_FILE += $(C_FILE:.c=.o)

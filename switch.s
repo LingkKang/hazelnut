@@ -45,7 +45,6 @@
     lw s0, 28(\base)
     lw s1, 32(\base)
     lw a0, 36(\base)
-    lw a1, 40(\base)
     lw a2, 44(\base)
     lw a3, 48(\base)
     lw a4, 52(\base)
@@ -66,6 +65,7 @@
     lw t4, 112(\base)
     lw t5, 116(\base)
     lw t6, 120(\base)
+    lw a1, 40(\base)
 
 .endm
 

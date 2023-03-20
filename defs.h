@@ -35,4 +35,13 @@ extern void ksleep_millisec(unsigned int t);
 // switch.s
 extern void switch_context(Context *old_context, Context *new_context);
 
+// sched.c
+extern void task_proceed(int i);
+extern int task_create(void *routine_entry);
+extern void task_pause(void);
+extern int _num_of_tasks;
+
+// user.c
+extern void user_init(void);
+
 #endif
