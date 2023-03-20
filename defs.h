@@ -45,4 +45,7 @@ extern int _num_of_tasks;
 // user.c
 extern void user_init(void);
 
+// kernel.c
+extern void kernel_main(void);
+
 #endif

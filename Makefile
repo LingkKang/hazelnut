@@ -22,7 +22,8 @@ C_FILE = \
 	print.c \
 	page.c \
 	sched.c \
-	user.c
+	user.c \
+	kernel.c
 
 OBJ_FILE = $(ASM_FILE:.S=.o)
 OBJ_FILE += $(C_FILE:.c=.o)
