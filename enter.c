@@ -8,10 +8,7 @@ void enter(void)
     uart_puts("\nHello, hazelnut!\n");
     page_init();
 
-    kprintf("Start to sleep ...\n");
-    ksleep_millisec(36864000 * 2); // 10 seconds or so
-    kprintf("Wake up!\n");
-
+    sched_init();
     user_init();
     int current_task = 0;
 

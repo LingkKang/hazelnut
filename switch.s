@@ -76,3 +76,13 @@ switch_context:
     _context_save a0
     _context_load a1
     ret
+
+# void sched_init(void);
+.func sched_init
+.globl sched_init
+sched_init:
+    li t0, 0
+    csrw mscratch, t0
+    ret
+
+.endfunc

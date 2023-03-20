@@ -34,6 +34,7 @@ extern void ksleep_millisec(unsigned int t);
 
 // switch.s
 extern void switch_context(Context *old_context, Context *new_context);
+extern void sched_init(void);
 
 // sched.c
 extern void task_proceed(int i);
