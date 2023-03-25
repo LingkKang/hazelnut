@@ -27,6 +27,7 @@ C_FILE =        \
 	kernel.c
 
 OBJ_FILE = $(ASM_FILE:.S=.o)
+OBJ_FILE = $(ASM_FILE:.s=.o)
 OBJ_FILE += $(C_FILE:.c=.o)
 
 all: os.elf
@@ -35,6 +36,9 @@ os.elf: ${OBJ_FILE}
 	${GCC} ${C_FLAGS} -T kernel.ld -o $@ $^
 
 %.o: %.S
+	${GCC} ${C_FLAGS} -c -o $@ $^
+
+%.o: %.s
 	${GCC} ${C_FLAGS} -c -o $@ $^
 
 %.o: %.c
