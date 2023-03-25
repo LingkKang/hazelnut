@@ -48,7 +48,7 @@ extern void user_init(void);
 // kernel.c
 extern void kernel_main(void);
 
-// trap.c
+// traps.s
 extern void trap_init(void);
 
 #endif

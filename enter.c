@@ -8,6 +8,7 @@ void enter(void)
     uart_puts("\nHello, hazelnut!\n");
     page_init();
     sched_init();
+    trap_init();
 
     // initialization finished
     // hand out control to kernel
