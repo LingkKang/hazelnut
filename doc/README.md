@@ -13,4 +13,5 @@
 - `sched.c`: CPU Scheduling.
 - `user.c`: User tasks.
 - `kernel.c`: Kernel of HazelNut.
-- `trap.s`: Trap (exception and interrupt) related
+- `traps.s`: Trap (exception and interrupt) related (assembly side).
+- `trap.c`: Trap handler.

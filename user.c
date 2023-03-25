@@ -14,10 +14,12 @@ void task0(void)
         kprintf("Task 0\t%d\n", i);
         i++;
         ksleep_millisec(DELAY);
-        if (i % 3 == 0) {
+        if (i % 3 == 0)
+        {
             task_pause();
         }
-        if (i == 2) {
+        if (i == 2)
+        {
             test_exception();
         }
     }
@@ -33,14 +35,16 @@ void task1(void)
         kprintf("Task 1\t%d\n", i);
         i++;
         ksleep_millisec(DELAY);
-        if (i % 5 == 0) {
+        if (i % 5 == 0)
+        {
             task_pause();
         }
     }
     return;
 }
 
-void user_init(void){
+void user_init(void)
+{
     task_create(&task0);
     task_create(&task1);
 }
