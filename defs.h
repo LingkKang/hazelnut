@@ -51,4 +51,7 @@ extern void kernel_main(void);
 // traps.s
 extern void trap_init(void);
 
+// trap.c
+extern void test_exception(void);
+
 #endif

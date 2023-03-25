@@ -15,7 +15,7 @@ ASM_FILE =      \
 	memory.s    \
 	timer.s     \
 	switch.s    \
-	trap.s
+	traps.s
 
 C_FILE =        \
 	enter.c     \
@@ -24,7 +24,8 @@ C_FILE =        \
 	page.c      \
 	sched.c     \
 	user.c      \
-	kernel.c
+	kernel.c    \
+	trap.c
 
 OBJ_FILE = $(ASM_FILE:.S=.o)
 OBJ_FILE = $(ASM_FILE:.s=.o)

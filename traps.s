@@ -59,7 +59,7 @@ trap_init:
     lw ra, 0(\base)
     lw sp, 4(\base)
     lw gp, 8(\base)
-    lw tp, 12(\base)
+    # lw tp, 12(\base)
     lw t0, 16(\base)
     lw t1, 20(\base)
     lw t2, 24(\base)
@@ -110,6 +110,8 @@ trap_vector:
 
     # restore context
     load_regs sp
+
+    addi sp, sp, 128
 
     mret
 

@@ -17,6 +17,9 @@ void task0(void)
         if (i % 3 == 0) {
             task_pause();
         }
+        if (i == 2) {
+            test_exception();
+        }
     }
     return;
 }
