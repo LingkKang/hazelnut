@@ -6,16 +6,10 @@
 trap_init:
     # initialize the trap functionality
 
-    addi    sp, sp, -4
-    sw      t0, 0(sp)
-
     # save `trap_vector` address to `mtvec` by `t0`
     lui     t0, %hi(trap_vector)     # load upper 20 bits
     addi    t0, t0, %lo(trap_vector) # load lower 12 bits
     csrw    mtvec, t0 
-
-    lw      t0, 0(sp)                # restore `t0`
-    addi    sp, sp, 4
 
     ret
 
