@@ -2,8 +2,6 @@
 
 #include "types.h"
 
-#define UART0 0x10000000 // memory address of UART0
-
 // UART control registers
 // defined only when needed
 // see http://byterunner.com/16550.html
