@@ -54,4 +54,7 @@ extern void trap_init(void);
 // trap.c
 extern void test_exception(void);
 
+// riscv.s
+extern uint32 read_tp(void);
+
 #endif

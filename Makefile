@@ -15,7 +15,8 @@ ASM_FILE =      \
 	memory.s    \
 	timer.s     \
 	switch.s    \
-	traps.s
+	traps.s     \
+	riscv.s
 
 C_FILE =        \
 	enter.c     \
