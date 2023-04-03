@@ -11,7 +11,7 @@ QEMU_FLAGS = -nographic -machine virt -bios none
 GDB = ${PREFIX}gdb
 
 ASM_FILE =      \
-	boot.S      \
+	boot.s      \
 	memory.s    \
 	timer.s     \
 	switch.s    \
@@ -28,7 +28,6 @@ C_FILE =        \
 	kernel.c    \
 	trap.c
 
-OBJ_FILE = $(ASM_FILE:.S=.o)
 OBJ_FILE = $(ASM_FILE:.s=.o)
 OBJ_FILE += $(C_FILE:.c=.o)
 
