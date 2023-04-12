@@ -26,10 +26,21 @@ regis trap_handler(regis mepc, regis mcause)
     if (trap_type)
     {
         // handle interrupts
-        panic("Unhandled interrupt!\n");
+        switch (trap_code)
+        {
+        case 11:
+            uart_puts("External interruption!\n");
+            external_interrupt_handler();
+            break;
+
+        default:
+            panic("Unhandled interrupt!\n");
+            break;
+        }
     }
     else
     {
+        // handle exceptions
         switch (trap_code)
         {
         case 5:
@@ -49,6 +60,22 @@ regis trap_handler(regis mepc, regis mcause)
     }
 
     return rpc;
+}
+
+void external_interrupt_handler(void)
+{
+    int irq_id = plic_claim();
+    kprintf("External interrupt source %d\n", irq_id);
+    if (irq_id == UART0_IRQ)
+    {
+        uart_interrupt();
+    }
+    else
+    {
+        panic("Unexpected interrupt!\n");
+    }
+    plic_complete(irq_id);
+    return;
 }
 
 void test_exception(void)

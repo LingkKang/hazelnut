@@ -46,8 +46,10 @@ void uart_init(void)
 {
     // Initialize the UART control register
 
-    // disable interrupts
-    uart_write_reg(IER, 0x00);
+    // enable interrupts
+    int ier = uart_read_reg(IER);
+    ier = ier | (1 << 0);
+    uart_write_reg(IER, ier);
 
     // set baud rate
     // first, change LCR's bit 7 to 1
@@ -137,4 +139,32 @@ uint8 uart_getchar(void)
         return c;
     }
     return -1;
+}
+
+uint8 uart_read_char(void)
+{
+    if (uart_read_reg(LSR) & LSR_RX_READY)
+    {
+        uint8 c = uart_read_reg(RHR);
+        return c;
+    }
+    return -1;
+}
+
+void uart_interrupt(void)
+{
+    while (1)
+    {
+        uint8 c = uart_read_char();
+        if (c == 255) // unsigned char is 255 for -1
+        {
+            uart_putchar('\n');
+            break;
+        }
+        else
+        {
+            uart_putchar(c);
+        }
+    }
+    return;
 }

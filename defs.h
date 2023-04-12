@@ -16,6 +16,7 @@ extern void uart_init(void);
 extern void uart_putchar(char c);
 extern void uart_puts(char *s);
 extern uint8 uart_getchar(void);
+void uart_interrupt(void);
 
 // print.c
 extern void kprint_int(int num, int base);
@@ -53,6 +54,7 @@ extern void trap_init(void);
 
 // trap.c
 extern void test_exception(void);
+extern void external_interrupt_handler(void);
 
 // riscv.s
 extern uint32 read_mhartid(void);
