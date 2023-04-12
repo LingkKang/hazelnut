@@ -4,14 +4,16 @@
 
 - `boot.S`: Bootstrap to load kernel.
 - `enter.c`: Routines before going to kernel.
-- `uart.c`: Serial port driver.
-- `print.c`: Formatted print utilities.
+- `kernel.c`: Kernel of HazelNut.
 - `memory.s`: Addresses receive from `kernel.ld`.
 - `page.c`: Memory initialization, allocation and free.
-- `timer.s`: Sleep for milliseconds (not accurate).
-- `switch.s`: Context switch.
+- `plic.c`: Functions of platform level interrupt controller (PLIC).
+- `print.c`: Formatted print utilities.
+- `riscv.s`: Assembly code for reading and writing some registers.
 - `sched.c`: CPU Scheduling.
-- `user.c`: User tasks.
-- `kernel.c`: Kernel of HazelNut.
-- `traps.s`: Trap (exception and interrupt) related (assembly side).
+- `switch.s`: Context switch.
+- `timer.s`: Sleep for milliseconds (not accurate).
 - `trap.c`: Trap handler.
+- `traps.s`: Trap (exception and interrupt) related (assembly side).
+- `uart.c`: Serial port driver.
+- `user.c`: User tasks.
