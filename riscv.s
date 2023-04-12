@@ -23,6 +23,34 @@ write_tp:
     ret
 
 
+.globl read_mie
+# uint32 read_mie(void);
+read_mie:
+    csrr        a0, mie
+    ret
+
+
+.globl write_mie
+# void write_mie(uint32);
+write_mie:
+    csrw        mie, a0
+    ret
+
+
+.globl read_mstatus
+# uint32 read_mstatus(void);
+read_mstatus:
+    csrr        a0, mstatus
+    ret
+
+
+.globl write_mstatus
+# void write_mstatus(uint32);
+write_mstatus:
+    csrw        mstatus, a0
+    ret
+
+
 .equ            PLIC, 0x0c000000
 
 .globl plic_set_priority
