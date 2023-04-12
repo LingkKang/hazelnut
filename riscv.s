@@ -51,6 +51,9 @@ write_mstatus:
     ret
 
 
+# PLIC related functions 
+# see qemu/include/hw/riscv/virt.h
+
 .equ            PLIC, 0x0c000000
 
 .globl plic_set_priority
