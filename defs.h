@@ -58,5 +58,9 @@ extern void test_exception(void);
 extern uint32 read_mhartid(void);
 extern uint32 read_tp(void);
 extern void write_tp(uint32);
+extern void plic_set_priority(uint32 irq_id, int pri_val);
+
+// plic.c
+extern void plic_init(void);
 
 #endif

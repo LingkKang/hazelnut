@@ -20,4 +20,17 @@ write_tp:
     mv          tp, a0
     ret
 
+.equ            PLIC, 0x0c000000
+
+.globl plic_set_priority
+# void plic_set_priority(uint32 irq_id, int pri_val);
+    # IRQ: Interrupt Request
+    # pri_val: priority value of interrupt source
+plic_set_priority:
+    li          t0, PLIC
+    slli        a0, a0, 2
+    add         a0, a0, t0
+    sw          a1, 0(a0)
+    ret
+
 .end

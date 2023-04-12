@@ -22,6 +22,9 @@ void enter(void)
     // set up trap handler
     trap_init();
 
+    // PLIC initialization
+    plic_init();
+
     // initialization finished
     // hand out control to kernel
     kernel_main();

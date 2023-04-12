@@ -26,7 +26,8 @@ C_FILE =        \
 	sched.c     \
 	user.c      \
 	kernel.c    \
-	trap.c
+	trap.c      \
+	plic.c
 
 OBJ_FILE = $(ASM_FILE:.s=.o)
 OBJ_FILE += $(C_FILE:.c=.o)
