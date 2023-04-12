@@ -106,4 +106,31 @@ plic_set_m_threshold:
     sw          a1, 0(a0)
     ret
 
+
+.equ            M_CLAIM, PLIC + 0x200004
+
+.globl plic_m_claim
+# int plic_m_claim(uint32 hartid);
+plic_m_claim:
+    li          t0, 0x1000
+    mul         a0, a0, t0
+    li          t0, M_CLAIM
+    add         a0, a0, t0
+    lw          t0, 0(a0)
+    mv          a0, t0
+    ret
+
+
+.equ            M_COMPLETE, M_CLAIM
+
+.globl plic_m_complete
+# extern void plic_m_complete(uint32 hartid, uint32 irq_id);
+plic_m_complete:
+    li          t0, 0x1000
+    mul         a0, a0, t0
+    li          t0, M_COMPLETE
+    add         a0, a0, t0
+    sw          a1, 0(a0)
+    ret
+
 .end

@@ -65,8 +65,12 @@ void write_mstatus(uint32);
 extern void plic_set_priority(uint32 irq_id, int pri_val);
 extern void plic_set_m_enable(uint32 hartid, uint32 irq_id);
 extern void plic_set_m_threshold(uint32 hartid, int thr_val);
+extern int plic_m_claim(uint32 hartid);
+extern void plic_m_complete(uint32 hartid, uint32 irq_id);
 
 // plic.c
 extern void plic_init(void);
+extern int plic_claim(void);
+extern void plic_complete(int irq_id);
 
 #endif

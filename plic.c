@@ -6,6 +6,7 @@
 // mstatus, machine status register
 #define MSTATUS_MIE (1 << 3) // mie inside mstatus
 
+
 void plic_init(void)
 {
     // initialize Platform Level Interrupt Controller
@@ -23,5 +24,18 @@ void plic_init(void)
 
     // enable machine mode global interrupts
     write_mstatus(read_mstatus() | MSTATUS_MIE);
+    return;
+}
+
+
+int plic_claim(void)
+{
+    return plic_m_claim(read_tp());
+}
+
+
+void plic_complete(int irq_id)
+{
+    plic_m_complete(read_tp(), irq_id);
     return;
 }
