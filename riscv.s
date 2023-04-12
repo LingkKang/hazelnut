@@ -8,11 +8,13 @@ read_mhartid:
     csrr        a0, mhartid
     ret
 
+
 .globl read_tp
 # uint32 read_tp(void);
 read_tp:
     mv          a0, tp
     ret
+
 
 .globl write_tp
 # void write_tp(uint32);
@@ -20,8 +22,8 @@ write_tp:
     mv          tp, a0
     ret
 
+
 .equ            PLIC, 0x0c000000
-.equ            M_ENABLE, PLIC + 0x2000
 
 .globl plic_set_priority
 # void plic_set_priority(uint32 irq_id, int pri_val);
@@ -37,8 +39,16 @@ plic_set_priority:
     sw          a1, 0(a0)
     ret
 
+
+.equ            M_ENABLE, PLIC + 0x2000
+
 .globl plic_set_m_enable
 # void plic_set_m_enable(uint32 hartid, uint32 irq_id);
+# address: 
+    # M_ENABLE + hartid * 0x80 
+# value of address: 1 bit for one interrupt source
+    # 1 enable
+    # 0 disable
 plic_set_m_enable:
     li          t0, 0x80
     mul         a0, a0, t0
@@ -46,6 +56,22 @@ plic_set_m_enable:
     add         a0, a0, t0
     li          t0, 1
     sll         a1, t0, a1
+    sw          a1, 0(a0)
+    ret
+
+
+.equ            M_THRESHOLD, PLIC + 0x200000
+
+.globl plic_set_m_threshold
+# void plic_set_m_threshold(uint32 hartid, int thr_val);
+# address: 
+    # M_THRESHOLD + hartid * 0x1000
+# any interrupt priority higher than thr_val will be handled by the hart
+plic_set_m_threshold:
+    li          t0, 0x1000
+    mul         a0, a0, t0
+    li          t0, M_THRESHOLD
+    add         a0, a0, t0
     sw          a1, 0(a0)
     ret
 
