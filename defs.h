@@ -55,6 +55,8 @@ extern void trap_init(void);
 extern void test_exception(void);
 
 // riscv.s
+extern uint32 read_mhartid(void);
 extern uint32 read_tp(void);
+extern void write_tp(uint32);
 
 #endif
