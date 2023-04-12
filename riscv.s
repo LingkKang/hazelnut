@@ -21,15 +21,31 @@ write_tp:
     ret
 
 .equ            PLIC, 0x0c000000
+.equ            M_ENABLE, PLIC + 0x2000
 
 .globl plic_set_priority
 # void plic_set_priority(uint32 irq_id, int pri_val);
     # IRQ: Interrupt Request
     # pri_val: priority value of interrupt source
+        # 0: do not interrupt
+        # 1: lowest priority
+        # 7: highest priority
 plic_set_priority:
     li          t0, PLIC
     slli        a0, a0, 2
     add         a0, a0, t0
+    sw          a1, 0(a0)
+    ret
+
+.globl plic_set_m_enable
+# void plic_set_m_enable(uint32 hartid, uint32 irq_id);
+plic_set_m_enable:
+    li          t0, 0x80
+    mul         a0, a0, t0
+    li          t0, M_ENABLE
+    add         a0, a0, t0
+    li          t0, 1
+    sll         a1, t0, a1
     sw          a1, 0(a0)
     ret
 

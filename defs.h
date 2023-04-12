@@ -59,6 +59,7 @@ extern uint32 read_mhartid(void);
 extern uint32 read_tp(void);
 extern void write_tp(uint32);
 extern void plic_set_priority(uint32 irq_id, int pri_val);
+extern void plic_set_m_enable(uint32 hartid, uint32 irq_id);
 
 // plic.c
 extern void plic_init(void);
