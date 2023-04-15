@@ -31,6 +31,8 @@ extern void *kalloc_pages(uint32 pg_num);
 extern void kfree(void *p);
 
 // timer.s
+extern void timer_load(int delta);
+extern void timer_init(void);
 extern void ksleep_millisec(unsigned int t);
 
 // switch.s

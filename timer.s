@@ -3,9 +3,10 @@
 .equ            CLINT, 0x2000000
 .equ            CLINT_MTIME, CLINT + 0xBFF8
 .equ            CLINT_MTIMECMP, CLINT + 0x4000
+# 10000000 ticks per second
+.equ            CLINT_TIME_BASE_FREQ, 10000000
 
 # void timer_load(int delta);
-
 .func timer_load
 .globl timer_load
 
@@ -43,6 +44,32 @@ timer_load:
 
     ret
 .endfunc
+
+
+.equ            MIE_MTIE, 1 << 7
+# void timer_init(void);
+.func timer_init
+.globl timer_init
+timer_init:
+    addi        sp, sp, -4
+    sw          ra, 0(sp)
+
+    # set time interval
+    li          a0, CLINT_TIME_BASE_FREQ
+    call        timer_load
+
+    # enable machine mode timer interrupts
+    call        read_mie
+    li          t0, MIE_MTIE
+    or          a0, a0, t0
+    call        write_mie
+
+    lw          ra, 0(sp)
+    add         sp, sp, 4
+
+    ret
+.endfunc
+
 
 # void ksleep_millisec(unsigned int t);
 

@@ -25,6 +25,9 @@ void enter(void)
     // PLIC initialization
     plic_init();
 
+    // timer initialization
+    timer_init();
+
     // initialization finished
     // hand out control to kernel
     kernel_main();
