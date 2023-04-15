@@ -13,15 +13,15 @@ timer_load:
     # set value in mtimercmp register
 
     # get current time
-    li          t0, CLINT_MTIME         # t0 is address of mtime (lower bits)
-    lw          s0, 0(t0)               # value of current time (lower bits)
+    li          t0, CLINT_MTIME             # t0 is address of mtime (lower bits)
+    lw          s0, 0(t0)                   # value of current time (lower bits)
     li          t0, CLINT_MTIME
-    lw          s1, 4(t0)               # value of current time (higher bits)
+    lw          s1, 4(t0)                   # value of current time (higher bits)
 
     # get value to store at mtimecmp
     # value is mtime + delta
     mv          t0, s0
-    add         s0, s0, a0              # value should be set to mtimecmp
+    add         s0, s0, a0                  # value should be set to mtimecmp
     sltu        t1, s0, t0
     add         s1, s1, t1
 
@@ -30,10 +30,10 @@ timer_load:
     sw          ra, 0(sp)
 
     # get mhartid
-    call        read_mhartid            # hartid saved at a0
+    call        read_mhartid                # hartid saved at a0
 
     # find address of mtimecmp
-    slli        a0, a0, 3               # hartid * 8
+    slli        a0, a0, 3                   # hartid * 8
     li          t0, CLINT_MTIMECMP
     add         a0, a0, t0
     sw          s0, 0(a0)
@@ -50,15 +50,15 @@ timer_load:
 .globl ksleep_millisec
 
 ksleep_millisec:
-    rdtime  t0              # time starts to sleep
+    rdtime      t0                          # time starts to sleep
 
 .L0:
     nop
     nop
-    rdtime  t1              # current time in loop
-    sub     t1, t1, t0      # t1 = t1 - t0
-    bgeu    t1, a0, .L1     # if t1 >= a0, return
-    j       .L0
+    rdtime      t1                          # current time in loop
+    sub         t1, t1, t0                  # t1 = t1 - t0
+    bgeu        t1, a0, .L1                 # if t1 >= a0, return
+    j           .L0
 
 .L1:
     ret
