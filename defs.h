@@ -34,6 +34,7 @@ extern void kfree(void *p);
 extern void timer_load(int delta);
 extern void timer_init(void);
 extern void ksleep_millisec(unsigned int t);
+extern void timer_interrupt_handler(void);
 
 // switch.s
 extern void switch_context(Context *old_context, Context *new_context);

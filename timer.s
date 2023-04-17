@@ -1,3 +1,10 @@
+.data
+_tick_str:
+    .asciz     "Tick %d\n"
+
+tick:
+    .long       0
+
 .text
 
 .equ            CLINT, 0x2000000
@@ -39,7 +46,7 @@ timer_load:
     add         a0, a0, t0
     sw          s0, 0(a0)
     sw          s1, 4(a0)
-    lw          ra, 0(a0)
+    lw          ra, 0(sp)
     addi        sp, sp, 4
 
     ret
@@ -70,6 +77,37 @@ timer_init:
     ret
 .endfunc
 
+
+.equ            INTERVAL, CLINT_TIME_BASE_FREQ
+
+# void timer_interrupt_handler(void);
+
+.func timer_interrupt_handler
+.globl timer_interrupt_handler
+timer_interrupt_handler:
+    addi        sp, sp, -12
+    sw          ra, 0(sp)
+    sw          s0, 4(sp)
+    sw          s1, 8(sp)
+
+    la          t0, tick
+    lw          t1, 0(t0)
+    addi        t1, t1, 1
+    sw          t1, 0(t0)
+
+    la          a0, _tick_str
+    mv          a1, t1
+    call        kprintf
+
+    li          a0, INTERVAL
+    call        timer_load
+
+    lw          ra, 0(sp)
+    lw          s0, 4(sp)
+    lw          s1, 8(sp)
+    addi        sp, sp, 12
+    ret
+.endfunc
 
 # void ksleep_millisec(unsigned int t);
 

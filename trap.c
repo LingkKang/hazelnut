@@ -28,6 +28,11 @@ regis trap_handler(regis mepc, regis mcause)
         // handle interrupts
         switch (trap_code)
         {
+        case 7:
+            kprintf("Machine timer interruption!\n");
+            timer_interrupt_handler();
+            break;
+
         case 11:
             uart_puts("External interruption!\n");
             external_interrupt_handler();
@@ -43,6 +48,12 @@ regis trap_handler(regis mepc, regis mcause)
         // handle exceptions
         switch (trap_code)
         {
+        case 1:
+            kprintf("Instruction access fault!\n");
+            kprintf("PC is at %p", rpc);
+            panic("...");
+            break;
+
         case 5:
             kprintf("Load access fault!\n");
             rpc += 4; // skip the instruction

@@ -43,8 +43,16 @@ void task1(void)
     return;
 }
 
+void task3(void)
+{
+    while (1)
+    {
+    }
+}
+
 void user_init(void)
 {
-    task_create(&task0);
-    task_create(&task1);
+    // task_create(&task0);
+    // task_create(&task1);
+    task_create(&task3);
 }

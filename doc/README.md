@@ -12,7 +12,7 @@
 - `riscv.s`: Assembly code for reading and writing some registers.
 - `sched.c`: CPU Scheduling.
 - `switch.s`: Context switch.
-- `timer.s`: Sleep for milliseconds (not accurate).
+- `timer.s`: Hardware timer and sleep for milliseconds (not accurate).
 - `trap.c`: Trap handler.
 - `traps.s`: Trap (exception and interrupt) related (assembly side).
 - `uart.c`: Serial port driver.
