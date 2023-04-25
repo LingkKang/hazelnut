@@ -6,8 +6,8 @@ sudo apt-get install autoconf automake autotools-dev curl python3 libmpc-dev lib
 
 cd riscv-gnu-toolchain
 
-./configure --prefix=/opt/riscv
+sudo ./configure --prefix=/opt/riscv
 
-make linux
+sudo make linux
 
 cd ..
