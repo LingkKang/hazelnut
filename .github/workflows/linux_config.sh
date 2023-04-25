@@ -9,3 +9,5 @@ cd riscv-gnu-toolchain
 ./configure --prefix=/opt/riscv
 
 make linux
+
+cd ..
