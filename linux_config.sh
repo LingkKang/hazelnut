@@ -10,4 +10,6 @@ sudo ./configure --prefix=/opt/riscv
 
 sudo make linux
 
+export PATH=$PATH:.
+
 cd ..
