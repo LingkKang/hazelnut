@@ -1,6 +1,14 @@
 .DEFAULT_GOAL := all
 
+ifeq ($(OS),Windows_NT)
+# Windows-specific
 PREFIX = riscv64-unknown-elf-
+else ifeq ($(shell uname),Linux)
+# Linux-specific
+PREFIX = riscv64-unknown-linux-gnu-
+else
+    $(error Unsupported operating system: $(OS))
+endif
 
 GCC = ${PREFIX}gcc
 C_FLAGS = -nostdlib -fno-builtin -march=rv32ima -mabi=ilp32 -g -Wall
