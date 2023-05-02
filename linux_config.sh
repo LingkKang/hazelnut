@@ -14,6 +14,6 @@ sudo make linux
 
 export PATH=$PATH:.
 
-tree
+tree -P "*[*x]" -f -d
 
 cd ..
