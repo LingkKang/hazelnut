@@ -38,13 +38,14 @@ extern void timer_interrupt_handler(void);
 
 // switch.s
 extern void switch_context(Context *old_context, Context *new_context);
-extern void sched_init(void);
 
 // sched.c
+extern void sched_init(void);
 extern void task_proceed(int i);
 extern int task_create(void *routine_entry);
 extern void task_pause(void);
 extern int _num_of_tasks;
+extern void task_yield(void);
 
 // user.c
 extern void user_init(void);
@@ -67,11 +68,14 @@ uint32 read_mie(void);
 void write_mie(uint32);
 uint32 read_mstatus(void);
 void write_mstatus(uint32);
+uint32 read_mscratch(void);
+void write_mscratch(uint32);
 extern void plic_set_priority(uint32 irq_id, int pri_val);
 extern void plic_set_m_enable(uint32 hartid, uint32 irq_id);
 extern void plic_set_m_threshold(uint32 hartid, int thr_val);
 extern int plic_m_claim(uint32 hartid);
 extern void plic_m_complete(uint32 hartid, uint32 irq_id);
+extern void write_clint_msip_one(uint32 hartid);
 
 // plic.c
 extern void plic_init(void);

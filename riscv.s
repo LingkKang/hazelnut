@@ -65,6 +65,24 @@ write_mstatus:
 .endfunc
 
 
+.func read_mscratch
+.globl read_mscratch
+# uint32 read_mscratch(void);
+read_mscratch:
+    csrr        a0, mscratch
+    ret
+.endfunc
+
+
+.func write_mscratch
+.globl write_mscratch
+# void write_mscratch(uint32);
+write_mscratch:
+    csrw        mscratch, a0
+    ret
+.endfunc
+
+
 # PLIC related functions 
 # see qemu/include/hw/riscv/virt.h
 
@@ -154,6 +172,23 @@ plic_m_complete:
     li          t0, M_COMPLETE
     add         a0, a0, t0
     sw          a1, 0(a0)
+    ret
+.endfunc
+
+
+# CLINT related functions
+
+.equ            CLINT, 0x2000000
+
+.func write_clint_msip_one
+.globl write_clint_msip_one
+# void write_clint_msip_one(uint32 hartid);
+write_clint_msip_one:
+    slli        a0, a0, 2          # a0 = hartid * 4
+    li          t0, CLINT
+    add         t0, a0, t0
+    li          t1, 1
+    sw          t1, 0(t0)
     ret
 .endfunc
 

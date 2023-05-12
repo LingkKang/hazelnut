@@ -10,6 +10,15 @@ Context *current_context;
 
 int _num_of_tasks = 0;
 
+void sched_init(void)
+{
+    // initialize `mscratch` to 0
+    write_mscratch(0);
+
+    // enable machine mode software interrupts
+    write_mie(read_mie() | MIE_MSIE);
+}
+
 int task_create(void *routine_entry)
 {
     // return 0 - success
@@ -42,4 +51,12 @@ void task_pause(void)
     current_context = &os_context;
     // switch context
     switch_context(old_context, current_context);
+}
+
+void task_yield(void)
+{
+    uint32 id = read_mhartid();
+    // write clint.msip to 1
+    write_clint_msip_one(id);
+    return;
 }

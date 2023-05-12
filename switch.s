@@ -81,15 +81,4 @@ switch_context:
 
 .endfunc
 
-# void sched_init(void);
-.func sched_init
-.globl sched_init
-
-sched_init:
-    li          t0, 0
-    csrw        mscratch, t0
-    ret
-
-.endfunc
-
 .end

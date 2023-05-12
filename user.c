@@ -16,12 +16,13 @@ void task0(void)
         ksleep_millisec(DELAY);
         if (i % 3 == 0)
         {
-            task_pause();
+            // task_pause();
+            task_yield();
         }
-        if (i == 2)
-        {
-            test_exception();
-        }
+        // if (i == 2)
+        // {
+        //     test_exception();
+        // }
     }
     return;
 }
@@ -37,7 +38,8 @@ void task1(void)
         ksleep_millisec(DELAY);
         if (i % 5 == 0)
         {
-            task_pause();
+            // task_pause();
+            task_yield();
         }
     }
     return;
@@ -52,7 +54,7 @@ void task3(void)
 
 void user_init(void)
 {
-    // task_create(&task0);
-    // task_create(&task1);
-    task_create(&task3);
+    task_create(&task0);
+    task_create(&task1);
+    // task_create(&task3);
 }
