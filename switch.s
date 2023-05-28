@@ -46,6 +46,7 @@
     lw          s0, 28(\base)
     lw          s1, 32(\base)
     lw          a0, 36(\base)
+    lw          a1, 40(\base)
     lw          a2, 44(\base)
     lw          a3, 48(\base)
     lw          a4, 52(\base)
@@ -66,7 +67,6 @@
     lw          t4, 112(\base)
     lw          t5, 116(\base)
     lw          t6, 120(\base)
-    lw          a1, 40(\base)
 
 .endm
 
@@ -77,6 +77,36 @@
 switch_context:
     _context_save a0
     _context_load a1
+    ret
+
+.endfunc
+
+
+# void switch_to(Context *next);
+.func switch_to
+.globl switch_to
+switch_to:
+
+    csrw        mscratch, a0
+    lw          a1, 124(a0)
+    csrw        mepc, a1
+
+    mv          t6, a0
+    _context_load    t6
+
+    mret
+
+.endfunc
+
+
+# void start_task(Context *next);
+.func start_task
+.globl start_task
+start_task:
+    csrw        mscratch, a0
+    lw          a1, 124(a0)
+    mv          ra, a1
+
     ret
 
 .endfunc

@@ -16,7 +16,7 @@ extern void uart_init(void);
 extern void uart_putchar(char c);
 extern void uart_puts(char *s);
 extern uint8 uart_getchar(void);
-void uart_interrupt(void);
+extern void uart_interrupt(void);
 
 // print.c
 extern void kprint_int(int num, int base);
@@ -38,6 +38,8 @@ extern void timer_interrupt_handler(void);
 
 // switch.s
 extern void switch_context(Context *old_context, Context *new_context);
+extern void switch_to(Context *next);
+extern void start_task(Context *next);
 
 // sched.c
 extern void sched_init(void);
@@ -45,7 +47,9 @@ extern void task_proceed(int i);
 extern int task_create(void *routine_entry);
 extern void task_pause(void);
 extern int _num_of_tasks;
+extern int _current_task;
 extern void task_yield(void);
+void task_scheduler(int proceed);
 
 // user.c
 extern void user_init(void);
@@ -59,23 +63,25 @@ extern void trap_init(void);
 // trap.c
 extern void test_exception(void);
 extern void external_interrupt_handler(void);
+extern void software_interrupt_handler(void);
 
 // riscv.s
 extern uint32 read_mhartid(void);
 extern uint32 read_tp(void);
 extern void write_tp(uint32);
-uint32 read_mie(void);
-void write_mie(uint32);
-uint32 read_mstatus(void);
-void write_mstatus(uint32);
-uint32 read_mscratch(void);
-void write_mscratch(uint32);
+extern uint32 read_mie(void);
+extern void write_mie(uint32);
+extern uint32 read_mstatus(void);
+extern void write_mstatus(uint32);
+extern uint32 read_mscratch(void);
+extern void write_mscratch(uint32);
 extern void plic_set_priority(uint32 irq_id, int pri_val);
 extern void plic_set_m_enable(uint32 hartid, uint32 irq_id);
 extern void plic_set_m_threshold(uint32 hartid, int thr_val);
 extern int plic_m_claim(uint32 hartid);
 extern void plic_m_complete(uint32 hartid, uint32 irq_id);
 extern void write_clint_msip_one(uint32 hartid);
+extern void write_clint_msip_zero(uint32 hartid);
 
 // plic.c
 extern void plic_init(void);

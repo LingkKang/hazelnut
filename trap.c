@@ -28,6 +28,11 @@ regis trap_handler(regis mepc, regis mcause)
         // handle interrupts
         switch (trap_code)
         {
+        case 3:
+            kprintf("Machine software interruption!\n");
+            software_interrupt_handler();
+            break;
+
         case 7:
             kprintf("Machine timer interruption!\n");
             timer_interrupt_handler();
@@ -87,6 +92,12 @@ void external_interrupt_handler(void)
     }
     plic_complete(irq_id);
     return;
+}
+
+void software_interrupt_handler(void)
+{
+    write_clint_msip_zero(read_mhartid());
+    task_scheduler(1);
 }
 
 void test_exception(void)

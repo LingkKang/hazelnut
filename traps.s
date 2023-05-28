@@ -89,13 +89,24 @@ trap_init:
 
 trap_vector:
     # save context
-    addi        sp, sp, -128
+    # mscratch is a pointer holds the address of contexts
+    csrrw       t6, mscratch, t6
 
     # save the registers.
-    store_regs  sp
+    store_regs  t6
+
+    mv          t5, t6
+    csrr        t6, mscratch
+    sw          t6, 120(t5)
+
+    # save a copy of mepc
+    csrr        a0, mepc
+    sw          a0, 124(t5) 
+
+    # restore the context pointer
+    csrw        mscratch, t5
 
     # call trap_handler
-    csrr        a0, mepc
     csrr        a1, mcause
     call        trap_handler
 
@@ -103,9 +114,8 @@ trap_vector:
     csrw        mepc, a0
 
     # restore context
-    load_regs   sp
-
-    addi        sp, sp, 128
+    csrr        t6, mscratch
+    load_regs   t6
 
     mret
 

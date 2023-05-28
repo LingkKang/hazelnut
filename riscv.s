@@ -192,4 +192,17 @@ write_clint_msip_one:
     ret
 .endfunc
 
+
+.func write_clint_msip_zero
+.globl write_clint_msip_zero
+# extern void write_clint_msip_zero(uint32 hartid);
+write_clint_msip_zero:
+    slli        a0, a0, 2
+    li          t0, CLINT
+    add         t0, a0, t0
+    li          t1, 0
+    sw          t1, 0(t0)
+    ret
+.endfunc
+
 .end
