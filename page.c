@@ -1,9 +1,9 @@
-// page and memory allocation
+/* page and memory allocation */
 
 #include "types.h"
 #include "defs.h"
 
-// defined in memory.s
+/* defined in memory.s */
 extern uint32 TEXT_START;
 extern uint32 TEXT_END;
 extern uint32 DATA_START;
@@ -23,7 +23,7 @@ extern uint32 MEM_END;
 #define OCCUPIED (1 << 0)  // bit 0, set to 1 if allocated
 #define PAGE_TAIL (1 << 1) // bit 1, set to 1 if is last allocated chunk
 
-struct Page
+struct Page // data structure of memory pages
 {
     uint8 profile;
 };
@@ -40,6 +40,9 @@ static uint32 page_count = 0;     // the number of pages that can be allocated
 #define _clear(pg) (pg->profile = 0) // clean header to 0 as initialization
 #define _align(addr) ((addr + PAGE_SIZE - 1) & ~(PAGE_SIZE - 1))
 
+/*
+Initialize memory pages.
+*/
 void page_init()
 {
     // reserve 8 pages to store page header info
@@ -68,9 +71,11 @@ void page_init()
     kprintf("HEAP:   0x%x -> 0x%x\n", starting_point, terminal_point);
 }
 
+/*
+Allocate exactly one page.
+*/
 void *kalloc(void)
 {
-    // allocate one page
     struct Page *p = (struct Page *)PGH_START;
     uint16 i = 0;
     while (i + PGH_START < PGH_END)
@@ -92,9 +97,11 @@ void *kalloc(void)
     return (void *)(starting_point + PAGE_SIZE * i);
 }
 
+/* 
+Allocate multiple pages by given page number.
+*/
 void *kalloc_pages(uint32 pg_num)
 {
-    // alloc multiple pages
     if (pg_num > page_count)
     {
         // not enough available pages
@@ -153,9 +160,11 @@ void *kalloc_pages(uint32 pg_num)
     return NULL;
 }
 
+/* 
+Free a chunk of memory.
+*/
 void kfree(void *p)
 {
-    // free a chunk of memory
     struct Page *head = (void *)(((int)p - starting_point) / PAGE_SIZE + PGH_START);
     while ((head->profile & PAGE_TAIL) == 0)
     {
@@ -166,6 +175,9 @@ void kfree(void *p)
     return;
 }
 
+/*
+Test cases of memory allocation and free.
+*/
 void test_alloc(void)
 {
     // kalloc test

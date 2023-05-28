@@ -1,10 +1,11 @@
 #include "defs.h"
 
+/*
+Analyze and handle traps.
+Privileged operations which can not be exposed to user.
+*/
 regis trap_handler(regis mepc, regis mcause)
 {
-    // handle kernel traps
-    // not expose to other scope
-
     kprintf("Start to handle the trap!\n");
 
     int trap_type = mcause >> 31;
@@ -48,6 +49,7 @@ regis trap_handler(regis mepc, regis mcause)
             break;
         }
     }
+
     else
     {
         // handle exceptions
@@ -78,6 +80,9 @@ regis trap_handler(regis mepc, regis mcause)
     return rpc;
 }
 
+/*
+Handle external interruption.
+*/
 void external_interrupt_handler(void)
 {
     int irq_id = plic_claim();
@@ -94,12 +99,19 @@ void external_interrupt_handler(void)
     return;
 }
 
+/*
+Handle software interrupt,
+AKA cooperative multitasking.
+*/
 void software_interrupt_handler(void)
 {
     write_clint_msip_zero(read_mhartid());
-    task_scheduler(1);
+    task_scheduler(TRUE);
 }
 
+/*
+A test case of exception handling.
+*/
 void test_exception(void)
 {
     kprintf("Going to have an exception!\n");

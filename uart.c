@@ -42,10 +42,11 @@ uint8 uart_read_reg(int reg)
     return *(get_reg(reg));
 }
 
+/*
+Initialize the UART control register for basic I/O.
+*/
 void uart_init(void)
 {
-    // Initialize the UART control register
-
     // enable interrupts
     int ier = uart_read_reg(IER);
     ier = ier | (1 << 0);
@@ -72,6 +73,9 @@ void uart_init(void)
     return;
 }
 
+/*
+Print a character on terminal via UART.
+*/
 void uart_putchar(char c)
 {
     uint8 current_LSR;
@@ -87,6 +91,9 @@ void uart_putchar(char c)
     return;
 }
 
+/*
+Print a string on terminal via UART.
+*/
 void uart_puts(char *s)
 {
     while (*s)
@@ -97,11 +104,12 @@ void uart_puts(char *s)
     return;
 }
 
+/*
+Print binary value of a given char.
+Mainly used for testing.
+*/
 void uart_print_char_val(uint8 c)
 {
-    // print binary value of given char
-    // mainly used for testing
-
     uint8 i = 7;
     while (1)
     {
@@ -116,6 +124,11 @@ void uart_print_char_val(uint8 c)
     return;
 }
 
+/*
+Read in a character from UART 
+and echo it back as feedback to user.
+Basically waiting for instructions.
+*/
 uint8 uart_getchar(void)
 {
     uint8 current_LSR = uart_read_reg(LSR);
@@ -141,6 +154,10 @@ uint8 uart_getchar(void)
     return -1;
 }
 
+/* 
+Read in a character but do not echo back.
+Mainly for keyboard interruption.
+*/
 uint8 uart_read_char(void)
 {
     if (uart_read_reg(LSR) & LSR_RX_READY)
@@ -151,6 +168,12 @@ uint8 uart_read_char(void)
     return -1;
 }
 
+/* 
+When keyboard interrupt arise by UART, 
+read in all input from buffer and 
+echo back them one by one.
+AKA UART interrupt handler.
+*/
 void uart_interrupt(void)
 {
     while (1)

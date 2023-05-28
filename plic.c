@@ -1,3 +1,7 @@
+/*
+Platform Level Interrupt Controller (PLIC) specific.
+*/
+
 #include "defs.h"
 
 // mie, machine mode interrupt enable register
@@ -6,7 +10,9 @@
 // mstatus, machine status register
 #define MSTATUS_MIE (1 << 3) // mie inside mstatus
 
-
+/*
+Initialize PLIC.
+*/
 void plic_init(void)
 {
     // initialize Platform Level Interrupt Controller
@@ -27,13 +33,20 @@ void plic_init(void)
     return;
 }
 
-
+/*
+Return the interrupt request id `irq_id`
+that have the highest priority at the moment
+for interrupt handling.
+*/
 int plic_claim(void)
 {
     return plic_m_claim(read_tp());
 }
 
-
+/*
+Tell the PLIC that this interruption
+is successfully handled.
+*/
 void plic_complete(int irq_id)
 {
     plic_m_complete(read_tp(), irq_id);

@@ -2,10 +2,12 @@
 
 #include "defs.h"
 
+/*
+Control passed to here from assembly.
+Do some initialization work and head to kernel.
+*/
 void enter(void)
 {
-    // do some initialization work
-
     // store each hart's hartid at tp register
     write_tp(read_mhartid());
 

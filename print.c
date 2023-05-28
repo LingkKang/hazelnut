@@ -1,13 +1,18 @@
-// formatted print utilities: kprintf, panic
+/*
+Formatted print utilities: kprintf, panic
+*/
 
 #include <stdarg.h>
 #include "defs.h"
 
 char digits[] = "0123456789ABCDEF";
 
+/*
+Print an integer with given number base,
+either 10 or 16.
+*/
 void kprint_int(int num, int base)
 {
-    // print an integer, only support %d and %h
     if (base != 10 && base != 16)
     {
         panic("Unsupported number system!");
@@ -47,9 +52,11 @@ void kprint_int(int num, int base)
     return;
 }
 
+/*
+Print the value of a pinter in hexidecimal.
+*/
 void kprint_ptr(uint32 p)
 {
-    // print hex value of a pointer.
     uint8 digit;
     uint8 i = 7;
     uint32 four_bits;
@@ -67,6 +74,15 @@ void kprint_ptr(uint32 p)
     return;
 }
 
+/*
+Formatted print.
+Supported:
+    %d - decimal number
+    %x - hexidecimal number
+    %p - pointer value
+    %s - string
+    %c - character
+*/
 void kprintf(char *s, ...)
 {
     // printf, only support %d, %x, %p, %s and %c
@@ -120,6 +136,9 @@ void kprintf(char *s, ...)
     }
 }
 
+/*
+Panic with specified prompt.
+*/
 void panic(char *s)
 {
     uart_puts("\nPANIC @ ");
@@ -130,6 +149,9 @@ void panic(char *s)
     return;
 }
 
+/*
+Test cases for printing values.
+*/
 void test_print(void)
 {
     // kprint_ptr test

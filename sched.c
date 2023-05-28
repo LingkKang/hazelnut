@@ -1,3 +1,7 @@
+/*
+Task scheduling.
+*/
+
 #include "defs.h"
 
 #define MAX_TASKS 10
@@ -8,9 +12,12 @@ Context tasks[MAX_TASKS];
 Context os_context;
 Context *current_context;
 
-int _num_of_tasks = 0;
-int _current_task = -1;
+int _num_of_tasks = 0;  // number of tasks
+int _current_task = -1; // current task id, init to -1 if no task
 
+/*
+Initialize scheduler.
+*/
 void sched_init(void)
 {
     // initialize `mscratch` to 0
@@ -20,6 +27,10 @@ void sched_init(void)
     write_mie(read_mie() | MIE_MSIE);
 }
 
+/*
+Sign up a user task.
+Return -1 means fail.
+*/
 int task_create(void *routine_entry)
 {
     // return 0 - success
@@ -35,25 +46,10 @@ int task_create(void *routine_entry)
     return -1;
 }
 
-void task_proceed(int i)
-{
-    // give control to tasks from OS
-    current_context = &tasks[i];
-    switch_context(&os_context, current_context);
-}
-
-void task_pause(void)
-{
-    // return control to OS
-    kprintf("Switching ...\n");
-    // save current context
-    Context *old_context = current_context;
-    // update current context with OS context
-    current_context = &os_context;
-    // switch context
-    switch_context(old_context, current_context);
-}
-
+/*
+User task hand out control to OS actively.
+AKA cooperative multitasking.
+*/
 void task_yield(void)
 {
     uint32 id = read_mhartid();
@@ -62,6 +58,10 @@ void task_yield(void)
     return;
 }
 
+/*
+Scheduler to decide what task to run next.
+Go through all tasks iteratively and serves FIFO.
+*/
 void task_scheduler(int proceed)
 {
     if (_num_of_tasks <= 0)

@@ -70,17 +70,6 @@
 
 .endm
 
-# void switch_context(Context *old_context, Context *new_context);
-.func switch_context
-.globl switch_context
-
-switch_context:
-    _context_save a0
-    _context_load a1
-    ret
-
-.endfunc
-
 
 # void switch_to(Context *next);
 .func switch_to

@@ -4,7 +4,7 @@
 .globl trap_init
 
 trap_init:
-    # initialize the trap functionality
+    # initialize trap functionality
 
     # save `trap_vector` address to `mtvec` by `t0`
     lui         t0, %hi(trap_vector)        # load upper 20 bits

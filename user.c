@@ -50,6 +50,9 @@ void task3(void)
     }
 }
 
+/*
+Register all user tasks.
+*/
 void user_init(void)
 {
     task_create(&task0);
