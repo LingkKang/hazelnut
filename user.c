@@ -16,7 +16,6 @@ void task0(void)
         ksleep_millisec(DELAY);
         if (i % 3 == 0)
         {
-            // task_pause();
             task_yield();
         }
         // if (i == 2)
@@ -38,7 +37,6 @@ void task1(void)
         ksleep_millisec(DELAY);
         if (i % 5 == 0)
         {
-            // task_pause();
             task_yield();
         }
     }
