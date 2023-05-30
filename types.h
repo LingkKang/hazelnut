@@ -53,4 +53,9 @@ typedef struct
     // ignore floating point registers
 } Context;
 
+// Simple spin lock for thread safety
+typedef struct {
+    uint8 locked; // set to 1 for locked; 0 as unlocked
+} Spinlock;
+
 #endif
