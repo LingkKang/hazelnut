@@ -95,9 +95,9 @@ timer_interrupt_handler:
     addi        t1, t1, 1
     sw          t1, 0(t0)
 
-    la          a0, _tick_str
-    mv          a1, t1
-    call        kprintf
+    # la          a0, _tick_str
+    # mv          a1, t1
+    # call        kprintf
 
     li          a0, INTERVAL
     call        timer_load

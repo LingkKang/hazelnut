@@ -11,6 +11,7 @@ typedef unsigned long long uint64;
 typedef uint32 regis;
 // registers are 32bits width on rv32
 
+// Wrap all needed registers for context switching
 typedef struct
 {
     // all registers
