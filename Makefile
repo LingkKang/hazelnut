@@ -18,6 +18,8 @@ QEMU_FLAGS = -nographic -machine virt -bios none
 
 GDB = ${PREFIX}gdb
 
+OBJDUMP = ${PREFIX}objdump
+
 ASM_FILE =      \
 	boot.s      \
 	memory.s    \
@@ -64,11 +66,15 @@ debug: all
 	@echo ------------------------------------
 	${QEMU} ${QEMU_FLAGS} -kernel os.elf -s -S 
 
-gdb:
+gdb: all
 	@echo Type 'quit' to exit GNU DGB
 	@echo ---------------------------
 	${GDB} os.elf -q -x gdbinit
 
+disassemble: all
+	@echo Check out disassembled code at `os.txt`
+	${OBJDUMP} -D os.elf > os.txt
+
 .PHONY: clean
 clean:
-	del *.o *.bin *.elf
+	del *.o *.bin *.elf os.txt

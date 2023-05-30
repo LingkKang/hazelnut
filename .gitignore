@@ -4,5 +4,8 @@
 # executable files
 *.elf
 
+# disassembled file
+os.txt
+
 # local settings
 .vscode/
