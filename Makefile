@@ -37,7 +37,8 @@ C_FILE =        \
 	user.c      \
 	kernel.c    \
 	trap.c      \
-	plic.c
+	plic.c      \
+	lock.c
 
 OBJ_FILE = $(ASM_FILE:.s=.o)
 OBJ_FILE += $(C_FILE:.c=.o)
