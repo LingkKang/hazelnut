@@ -66,6 +66,7 @@ extern void plic_complete(int irq_id);
 
 // lock.c
 
+void init_lock(SpinLock *lock);
 extern void acquire_lock(SpinLock *lock);
 void release_lock(SpinLock *lock);
 

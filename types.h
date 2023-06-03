@@ -54,7 +54,7 @@ typedef struct
 } Context;
 
 // Simple spin lock for thread safety
-typedef struct {
+typedef struct spinlock {
     uint8 locked; // set to 1 for locked; 0 as unlocked
 } SpinLock;
 
