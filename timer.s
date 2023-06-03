@@ -107,7 +107,6 @@ timer_interrupt_handler:
     lw          s1, 8(sp)
     addi        sp, sp, 12
 
-    li          a0, 1
     call        task_scheduler
 
     ret

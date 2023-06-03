@@ -10,7 +10,7 @@ void kernel_main(void)
     user_init();
 
     // call scheduler to arrange them
-    task_scheduler(FALSE);
+    task_scheduler();
 
     while (1)
     {

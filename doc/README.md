@@ -5,6 +5,7 @@
 - `boot.S`: Bootstrap to load kernel.
 - `enter.c`: Routines before going to kernel.
 - `kernel.c`: Kernel of HazelNut.
+- `lock.c`: Spin lock related.
 - `memory.s`: Addresses receive from `kernel.ld`.
 - `page.c`: Memory initialization, allocation and free.
 - `plic.c`: Functions of platform level interrupt controller (PLIC).

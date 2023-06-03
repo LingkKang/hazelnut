@@ -106,7 +106,7 @@ AKA cooperative multitasking.
 void software_interrupt_handler(void)
 {
     write_clint_msip_zero(read_mhartid());
-    task_scheduler(TRUE);
+    task_scheduler();
 }
 
 /*

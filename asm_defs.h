@@ -21,10 +21,8 @@ extern void ksleep_millisec(unsigned int t);
 
 // switch.s
 
-/* Switch to / restore the given context. */
+/* Switch to the given context or start user task from OS. */
 extern void switch_to(Context *next);
-/* Start a new user task. */
-extern void start_task(Context *next);
 
 
 // traps.s

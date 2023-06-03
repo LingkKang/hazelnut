@@ -42,7 +42,7 @@ extern int task_create(void *routine_entry);
 extern int _num_of_tasks;
 extern int _current_task;
 extern void task_yield(void);
-extern void task_scheduler(int proceed);
+extern void task_scheduler(void);
 
 // user.c
 

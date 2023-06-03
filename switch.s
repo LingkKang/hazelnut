@@ -87,17 +87,4 @@ switch_to:
 
 .endfunc
 
-
-# void start_task(Context *next);
-.func start_task
-.globl start_task
-start_task:
-    csrw        mscratch, a0
-    lw          a1, 124(a0)
-    mv          ra, a1
-
-    ret
-
-.endfunc
-
 .end
