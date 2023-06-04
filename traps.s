@@ -94,6 +94,7 @@ trap_vector:
 
     # save the registers.
     store_regs  t6
+    mv          a2, t6
 
     mv          t5, t6
     csrr        t6, mscratch

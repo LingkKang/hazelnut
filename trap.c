@@ -4,7 +4,7 @@
 Analyze and handle traps.
 Privileged operations which can not be exposed to user.
 */
-regis trap_handler(regis mepc, regis mcause)
+regis trap_handler(regis mepc, regis mcause, Context context)
 {
     // kprintf("Start to handle the trap!\n");
 
@@ -72,14 +72,13 @@ regis trap_handler(regis mepc, regis mcause)
             break;
 
         case 8:
-            kprintf("Environment call from U-mode!\n");
-            TODO();
-            // do_syscall(context);
+            // kprintf("Environment call from U-mode!\n");
+            syscall_handler(&context);
             rpc += 4;
             break;
 
         default:
-            kprintf("mepc@%p", rpc);
+            kprintf("mepc @ %p with trap code %d", rpc, trap_code);
             panic("Unhandled exception!\n");
             break;
         }

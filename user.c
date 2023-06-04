@@ -11,6 +11,7 @@ void task0(void)
     {
         kprintf("Task 0\t%d\n", i);
         i++;
+        // kprintf("Hart id is %d\n", sys_get_hart_id());
         delay(1);
         if (i % 3 == 0)
         {

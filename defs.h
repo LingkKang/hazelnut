@@ -55,6 +55,7 @@ extern void kernel_main(void);
 
 // trap.c
 
+regis trap_handler(regis mepc, regis mcause, Context context);
 extern void test_exception(void);
 extern void external_interrupt_handler(void);
 extern void software_interrupt_handler(void);
@@ -73,7 +74,7 @@ void release_lock(SpinLock *lock);
 
 // syscall.c
 
-void syscall_handler(Context context);
+void syscall_handler(Context *context);
 
 // delay.c
 
