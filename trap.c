@@ -9,19 +9,19 @@ regis trap_handler(regis mepc, regis mcause)
     // kprintf("Start to handle the trap!\n");
 
     int trap_type = mcause >> 31;
-    // if (trap_type == 1)
-    // {
-    //     // MSB of `mcause` is 1, interrupt
-    //     kprintf("\tTrap type: Interrupt\n");
-    // }
-    // else
-    // {
-    //     // MSB of `mcause` is 0, exception
-    //     kprintf("\tTrap type: Exception\n");
-    // }
+    if (trap_type == 1)
+    {
+        // MSB of `mcause` is 1, interrupt
+        kprintf("\tTrap type: Interrupt\n");
+    }
+    else
+    {
+        // MSB of `mcause` is 0, exception
+        kprintf("\tTrap type: Exception\n");
+    }
 
     regis trap_code = (mcause << 1) >> 1;
-    // kprintf("\tTrap code: %d\n", trap_code);
+    kprintf("\tTrap code: %d\n", trap_code);
     regis rpc = mepc;
 
     if (trap_type)
@@ -72,6 +72,7 @@ regis trap_handler(regis mepc, regis mcause)
             break;
 
         default:
+            kprintf("mepc@%p", rpc);
             panic("Unhandled exception!\n");
             break;
         }
