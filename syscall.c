@@ -16,6 +16,10 @@ void syscall_handler(Context *context)
         asm volatile("rdtime %0" : "=r" (context->a0));
         break;
 
+    case SYSCALL_TASK_YIELD:
+        task_yield();
+        break;
+
     default:
         kprintf("Unknown syscall id %d\n", syscall_id);
         panic("");
