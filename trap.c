@@ -9,19 +9,19 @@ regis trap_handler(regis mepc, regis mcause)
     // kprintf("Start to handle the trap!\n");
 
     int trap_type = mcause >> 31;
-    if (trap_type == 1)
-    {
-        // MSB of `mcause` is 1, interrupt
-        kprintf("\tTrap type: Interrupt\n");
-    }
-    else
-    {
-        // MSB of `mcause` is 0, exception
-        kprintf("\tTrap type: Exception\n");
-    }
+    // if (trap_type == 1)
+    // {
+    //     // MSB of `mcause` is 1, interrupt
+    //     kprintf("\tTrap type: Interrupt\n");
+    // }
+    // else
+    // {
+    //     // MSB of `mcause` is 0, exception
+    //     kprintf("\tTrap type: Exception\n");
+    // }
 
     regis trap_code = (mcause << 1) >> 1;
-    kprintf("\tTrap code: %d\n", trap_code);
+    // kprintf("\tTrap code: %d\n", trap_code);
     regis rpc = mepc;
 
     if (trap_type)
@@ -40,7 +40,7 @@ regis trap_handler(regis mepc, regis mcause)
             break;
 
         case 11:
-            uart_puts("External interruption!\n");
+            // uart_puts("External interruption!\n");
             external_interrupt_handler();
             break;
 
@@ -71,6 +71,13 @@ regis trap_handler(regis mepc, regis mcause)
             rpc += 4; // skip the instruction
             break;
 
+        case 8:
+            kprintf("Environment call from U-mode!\n");
+            TODO();
+            // do_syscall(context);
+            rpc += 4;
+            break;
+
         default:
             kprintf("mepc@%p", rpc);
             panic("Unhandled exception!\n");
@@ -87,7 +94,7 @@ Handle external interruption.
 void external_interrupt_handler(void)
 {
     int irq_id = plic_claim();
-    kprintf("External interrupt source %d\n", irq_id);
+    // kprintf("External interrupt source %d\n", irq_id);
     if (irq_id == UART0_IRQ)
     {
         uart_interrupt();

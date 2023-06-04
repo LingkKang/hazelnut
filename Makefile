@@ -26,7 +26,8 @@ ASM_FILE =      \
 	timer.s     \
 	switch.s    \
 	traps.s     \
-	riscv.s
+	riscv.s     \
+	syscalls.s
 
 C_FILE =        \
 	enter.c     \
@@ -38,7 +39,9 @@ C_FILE =        \
 	kernel.c    \
 	trap.c      \
 	plic.c      \
-	lock.c
+	lock.c      \
+	delay.c     \
+	syscall.c
 
 OBJ_FILE = $(ASM_FILE:.s=.o)
 OBJ_FILE += $(C_FILE:.c=.o)

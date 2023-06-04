@@ -5,6 +5,7 @@
 
 #include "types.h"
 #include "asm_defs.h"
+#include "syscall.h"
 
 #define TRUE 1
 #define FALSE 0
@@ -70,4 +71,12 @@ void init_lock(SpinLock *lock);
 extern void acquire_lock(SpinLock *lock);
 void release_lock(SpinLock *lock);
 
-#endif
+// syscall.c
+
+void syscall_handler(Context context);
+
+// delay.c
+
+void delay(int time);
+
+#endif // __DEFS_H__

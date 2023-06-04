@@ -12,7 +12,7 @@ typedef uint32 regis;
 // registers are 32bits width on rv32
 
 // Wrap all needed registers for context switching
-typedef struct
+typedef struct context
 {
     // all registers
     // called by its ABI name
@@ -49,12 +49,13 @@ typedef struct
     regis t4;  // x29, 112
     regis t5;  // x30
     regis t6;  // x31
-    regis pc; // program counter, 124
+    regis pc;  // program counter, 124
     // ignore floating point registers
 } Context;
 
 // Simple spin lock for thread safety
-typedef struct spinlock {
+typedef struct spinlock
+{
     uint8 locked; // set to 1 for locked; 0 as unlocked
 } SpinLock;
 
