@@ -1,5 +1,6 @@
 /*
-Declaration of functions from assembly file
+Declaration of functions from assembly file,
+except all syscalls
 */
 
 #ifndef __ASM_DEFS_H__
@@ -15,7 +16,8 @@ extern void timer_load(int delta);
 extern void timer_init(void);
 /* Handle timer interruption. AKA preemptive multitasking. */
 extern void timer_interrupt_handler(void);
-/* Sleep / delay for given time of milliseconds. */
+/* Sleep / delay for given time of milliseconds. 
+For user mode, please use `delay()`. */
 extern void ksleep_millisec(unsigned int t);
 
 // switch.s

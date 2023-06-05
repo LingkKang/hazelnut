@@ -71,9 +71,9 @@
 .endm
 
 
-# void switch_to(Context *next);
 .func switch_to
 .globl switch_to
+# void switch_to(Context *next);
 switch_to:
 
     csrw        mscratch, a0

@@ -11,11 +11,9 @@ void task0(void)
     {
         kprintf("Task 0\t%d\n", i);
         i++;
-        // kprintf("Hart id is %d\n", sys_get_hart_id());
         delay(1);
         if (i % 3 == 0)
         {
-            // task_yield();
             sys_task_yield();
         }
         // if (i == 2)
@@ -37,7 +35,6 @@ void task1(void)
         delay(1);
         if (i % 5 == 0)
         {
-            // task_yield();
             sys_task_yield();
         }
     }

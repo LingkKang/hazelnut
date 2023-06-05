@@ -125,7 +125,7 @@ void uart_print_char_val(uint8 c)
 }
 
 /*
-Read in a character from UART 
+Read in a character from UART
 and echo it back as feedback to user.
 Basically waiting for instructions.
 */
@@ -154,7 +154,7 @@ uint8 uart_getchar(void)
     return -1;
 }
 
-/* 
+/*
 Read in a character but do not echo back.
 Mainly for keyboard interruption.
 */
@@ -168,9 +168,9 @@ uint8 uart_read_char(void)
     return -1;
 }
 
-/* 
-When keyboard interrupt arise by UART, 
-read in all input from buffer and 
+/*
+When keyboard interrupt arise by UART,
+read in all input from buffer and
 echo back them one by one.
 AKA UART interrupt handler.
 */

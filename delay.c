@@ -5,6 +5,7 @@
 /*
 Delay the thread for given time which measured in secondes,
 not accurate.
+Similar to `ksleep_millisec()` in machine mode.
 */
 void delay(int time)
 {

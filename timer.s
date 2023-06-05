@@ -54,9 +54,10 @@ timer_load:
 
 
 .equ            MIE_MTIE, 1 << 7
-# void timer_init(void);
+
 .func timer_init
 .globl timer_init
+# void timer_init(void);
 timer_init:
     addi        sp, sp, -4
     sw          ra, 0(sp)
@@ -80,10 +81,9 @@ timer_init:
 
 .equ            INTERVAL, CLINT_TIME_BASE_FREQ
 
-# void timer_interrupt_handler(void);
-
 .func timer_interrupt_handler
 .globl timer_interrupt_handler
+# void timer_interrupt_handler(void);
 timer_interrupt_handler:
     addi        sp, sp, -12
     sw          ra, 0(sp)
@@ -112,11 +112,10 @@ timer_interrupt_handler:
     ret
 .endfunc
 
-# void ksleep_millisec(unsigned int t);
 
 .func ksleep_millisec
 .globl ksleep_millisec
-
+# void ksleep_millisec(unsigned int t);
 ksleep_millisec:
     rdtime      t0                          # time starts to sleep
 
@@ -130,6 +129,6 @@ ksleep_millisec:
 
 .L1:
     ret
-
 .endfunc
+
 .end

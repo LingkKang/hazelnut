@@ -1,9 +1,12 @@
 #include "defs.h"
 #include "syscall.h"
 
+/*
+In machine mode, handle all syscall requests
+and return control to trap handler.
+*/
 void syscall_handler(Context *context)
 {
-    // TODO();
     regis syscall_id = context->a7;
     switch (syscall_id)
     {
@@ -12,8 +15,9 @@ void syscall_handler(Context *context)
         break;
 
     case SYSCALL_GET_HW_TIME:
-        // context->a0 = 0;
-        asm volatile("rdtime %0" : "=r" (context->a0));
+        asm volatile(
+            "rdtime %0"
+            : "=r"(context->a0));
         break;
 
     case SYSCALL_TASK_YIELD:
@@ -22,7 +26,7 @@ void syscall_handler(Context *context)
 
     default:
         kprintf("Unknown syscall id %d\n", syscall_id);
-        panic("");
+        panic("syscall_handler");
         break;
     }
     return;

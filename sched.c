@@ -62,7 +62,6 @@ void task_yield(void)
 Scheduler to decide what task to run next.
 Go through all tasks iteratively and serves FIFO.
 */
-// void task_scheduler(int proceed)
 void task_scheduler(void)
 {
     if (_num_of_tasks <= 0)
@@ -72,13 +71,5 @@ void task_scheduler(void)
     }
     _current_task = (_current_task + 1) % _num_of_tasks;
     Context *next = &(tasks[_current_task]);
-    // if (proceed)
-    // {
-    //     switch_to(next);
-    // }
-    // else
-    // {
-    //     start_task(next);
-    // }
     switch_to(next);
 }
