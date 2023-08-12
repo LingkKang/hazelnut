@@ -1,0 +1,4 @@
+--read-lang-def=ld-def.txt
+--exclude-lang=Text
+--exclude-dir=.vscode,.github
+exclude-ext sh

@@ -1,0 +1,5 @@
+Linker Script
+    filter call_regexp_common C
+    filter rm_comments_in_strings " /* */
+    extension ld
+    3rd_gen_scale 1.00
